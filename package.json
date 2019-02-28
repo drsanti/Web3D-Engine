@@ -1,0 +1,43 @@
+{
+  "name": "ecc-cgp-engine",
+  "version": "0.1.1",
+  "description": "ecc-cgp-engine by ecc-lab",
+  "main": "index.js",
+  "scripts": {
+    "webpack": "webpack --watch --mode development --inline --colors --progress --display-error-details --display-cached",
+    "start": "webpack-dev-server --inline",
+    "build": "webpack --mode production --inline --colors --progress --display-error-details --display-cached",
+    "rollup": "rollup -c",
+    "terser": "terser src/libs/EngineCore.all.js -o apps/src/libs/EngineCore.js -c",
+    "publish": "npm run rollup && npm run terser &&  cp -rf src/libs/ECC-CGP-Engine.js apps/src/libs/ECC-CGP-Engine.js"
+  },
+  "keywords": [
+    "3D",
+    "Graphics",
+    "Physics"
+  ],
+  "author": "Dr.Santi Nuratch",
+  "license": "ISC",
+  "dependencies": {
+    "cannon": "^0.6.2",
+    "three": "^0.99.0",
+    "three-css2drender": "^1.0.0",
+    "three-gltf-loader": "^1.99.1",
+    "three.equirectangular-to-cubemap": "^1.1.0",
+    "threejs-orbit-controls": "^1.0.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "babel-loader": "^8.0.4",
+    "css-loader": "^2.1.0",
+    "rollup": "^1.1.2",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-node-resolve": "^4.0.1",
+    "style-loader": "^0.23.1",
+    "terser": "^3.16.1",
+    "webpack": "^4.28.0",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.14"
+  }
+}
