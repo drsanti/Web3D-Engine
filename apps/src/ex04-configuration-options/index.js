@@ -3,7 +3,7 @@
  * 
  * Dr.Santi Nuratch
  * Embedded Computing and Control Laboratory
- *  22 February, 2019
+ * 22 February, 2019
  */
 
 //!! Import the ECC-CGP-Engine
@@ -24,8 +24,10 @@ const engine = new Engine({
     },
     physics:{                   //!! Physics options
         enabled:  true,         //!! Use physics engine
-        useDebug: true,         //!! Use physics debug
-        stepTime: 1/10          //!! Step time of physics solver
+        timeStep: 1/500,        //!! Time step of physics solver
+        debug: {
+            enabled: true,      //!! Use physics debug
+        }
     }
 });
 //!! Initialize the engine

@@ -3,7 +3,7 @@
  * 
  * Dr.Santi Nuratch
  * Embedded Computing and Control Laboratory
- *  22 February, 2019
+ * 22 February, 2019
  */
 
 //!! Import the ECC-CGP-Engine
@@ -14,12 +14,10 @@ const engine = new Engine();
 
 //!! Engine initialization options
 const initOpts = {  //!! 
-    envPath: 'images/Bridge2',  //!! Environment texture (CubeMapTexture)
+    envPath: 'images/bridge',   //!! Environment texture (CubeMapTexture)
     models: [                   //!! GLTF models
-        'models/prebuilds/grounds/ground1.gltf',
-        'models/prebuilds/boxes/box1.gltf',
-        'models/prebuilds/boxes/box2.gltf',
-        'models/prebuilds/boxes/box3.gltf',
+        'models/scene001.gltf', //!! Grround, Walls and Basic Primitive objects
+        'models/boxes001.gltf', //!! Textured boxes
     ]
 };
 

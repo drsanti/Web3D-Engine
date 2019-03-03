@@ -9,9 +9,7 @@
 
 import Engine from '../libs/ECC-CGP-Engine';
 
-//!!
-//!! Example-11: Physics Materials
-//!!
+//!! Create the engine
 const engine = new Engine({
     physics:{
         enabled:  true,     //!! Enable the physics engine
@@ -28,9 +26,9 @@ const engine = new Engine({
 
 //!! Engine initialization options
 const initOpts = {  //!! 
-    envPath: 'images/Bridge2',  //!! Environment texture (CubeMapTexture)
+    envPath: 'images/bridge',   //!! Environment texture (CubeMapTexture)
     models: [                   //!! GLTF models
-        'models/prebuilds/grounds/ground1.gltf',
+        'models/scene001.gltf', //!! Grround, Walls and Basic Primitive objects
     ]
 };
 
@@ -40,11 +38,9 @@ engine.init( initOpts ).then( ( params ) => {
     engine.start( callback );               //!! Start and provide the callback function
 });
 
-
-
-const GROUND_MESH_NAME = 'StaticCube';
-const TARGET_MESH_NAME = 'SphereBall1';      //!! Target mesh name exported from Blender   
-var targetBody = undefined;                 //!! Target body will be used in userInit and loop/callback
+const GROUND_MESH_NAME = 'CubeStaticGround';    //!! Ground mesh name exported from the Blender   
+const TARGET_MESH_NAME = 'Sphere001';           //!! Target mesh name exported from Blender   
+var targetBody = undefined;                     //!! Target body will be used in userInit and loop/callback
 
 function uerInit( params ) {
 

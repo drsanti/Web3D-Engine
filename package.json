@@ -1,11 +1,11 @@
 {
-  "name": "ecc-cgp-engine",
+  "name": "ecc-game-engine",
   "version": "0.1.1",
-  "description": "ecc-cgp-engine by ecc-lab",
+  "description": "ecc-game-engine by ecc-lab",
   "main": "index.js",
   "scripts": {
     "webpack": "webpack --watch --mode development --inline --colors --progress --display-error-details --display-cached",
-    "start": "webpack-dev-server --inline",
+    "start": "webpack-dev-server --inline --watch --colors",
     "build": "webpack --mode production --inline --colors --progress --display-error-details --display-cached",
     "rollup": "rollup -c",
     "terser": "terser src/libs/EngineCore.all.js -o apps/src/libs/EngineCore.js -c",
@@ -13,6 +13,7 @@
   },
   "keywords": [
     "3D",
+    "Game",
     "Graphics",
     "Physics"
   ],

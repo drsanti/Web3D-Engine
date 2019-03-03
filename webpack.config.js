@@ -1,3 +1,4 @@
+
 // const __exdir__  = 'ex01-getting-started';
 // const __exdir__  = 'ex02-engine-callback';
 // const __exdir__  = 'ex03-user-init-function';
@@ -8,9 +9,10 @@
 // const __exdir__  = 'ex08-keyboard-input';
 // const __exdir__  = 'ex09-force-impulse';
 // const __exdir__  = 'ex10-local-force-impulse';
-const __exdir__  = 'ex11-physics-materials';
-
-
+// const __exdir__  = 'ex11-physics-materials';
+// const __exdir__  = 'ex12-show-hide-debug-labels';
+// const __exdir__  = 'ex13-raycast-force-impulse';
+const __exdir__  = 'ex14-models-assets-loading';
 
 //!!
 //!!
@@ -32,7 +34,6 @@ const path = require('path');
 module.exports = {
   entry: (__mode__ === 'app') ? './' + config.app.root + '/src/' + config.app.main  :  './src/' + config.dev.main,
   mode: 'development',
-  //watch: true,
   output: {
     path: path.resolve(__dirname, config.app.root + '/public'),
     filename: 'bundle.js'

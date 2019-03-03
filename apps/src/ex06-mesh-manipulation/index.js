@@ -18,9 +18,9 @@ const engine = new Engine({
 
 //!! Engine initialization options
 const initOpts = {  //!! 
-    envPath: 'images/Bridge2',  //!! Environment texture (CubeMapTexture)
+    envPath: 'images/bridge',   //!! Environment texture (CubeMapTexture)
     models: [                   //!! GLTF models
-        'models/prebuilds/grounds/ground1.gltf',
+        'models/scene001.gltf', //!! Grround, Walls and Basic Primitive objects
     ]
 };
 
@@ -31,7 +31,7 @@ engine.init( initOpts ).then( ( params ) => {
 });
 
 //!! Target
-const TARGET_MESH_NAME = 'CubeBrick1';      //!! Target mesh name exported from Blender   
+const TARGET_MESH_NAME = 'Cube002';         //!! Target mesh name exported from Blender   
 var targetMesh = undefined;                 //!! Target mesh will be used in userInit and loop/callback
 
 //!! User initialization function

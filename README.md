@@ -1,5 +1,4 @@
-**Computer-based Graphics and Physics Engine**
-***
+
 
 **Example-01: Getting Started**
 ```javascript
@@ -13,7 +12,7 @@
     engine.printInfo( "Engine started. Please wait..." );
     setTimeout( () => {
         engine.stop();      //!! Stop the engine
-        engine.printInfo( "Engine stopped" );
+        engine.printInfo( "Engine stopped. Refresh the browser to try again" );
     }, 5000);
  });
 ```
@@ -24,7 +23,7 @@
 ```javascript
  //!! Create the engine
  const engine = new Engine();
- 
+  
  //!! Initialize the engine
  engine.init().then( ( params ) => {
     console.log( params );      //!! Check the params object in the console window
@@ -33,24 +32,26 @@
 
  //!! Engine callback function called every frame (60 fps)
  function callback( args ) {
-     //!! Do something here
+    //!! Do something here
  }
 ```
+
 ***
+
 **Example-03: User initialization function**
 ```javascript
-//!! Create the engine
+///!! Create the engine
 const engine = new Engine();
 
 //!! Initialize the engine
 engine.init().then( ( params ) => {
     userInit( params );             //!! User initialization function
-    engine.start();                 //!! Start the engine without callback
+    engine.start();                 //!! Start the engine
 });
 
 //!! User initialize function
 function userInit( params ) {
-    engine.printInfo("Put initialized code here");
+    engine.printInfo("Put your initialized code here");
 }
 ```
 ***
@@ -59,7 +60,9 @@ function userInit( params ) {
 //!! Create the engine with options
 const engine = new Engine({
     graphics:{  //!! Graphics options
+        
         sceneType: 'fog',       //!! Scene type, 'env', 'fog', 'basic'
+
         grids:{                         //!! Grids
             enabled:   true,            //!! Use grids
             colorGrid: 0x224411,        //!! Grid color
@@ -68,8 +71,10 @@ const engine = new Engine({
     },
     physics:{                   //!! Physics options
         enabled:  true,         //!! Use physics engine
-        useDebug: true,         //!! Use physics debug
-        stepTime: 1/10          //!! Step time of physics solver
+        timeStep: 1/500,        //!! Time step of physics solver
+        debug: {
+            enabled: true,      //!! Use physics debug
+        }
     }
 });
 //!! Initialize the engine
@@ -86,12 +91,10 @@ const engine = new Engine();
 
 //!! Engine initialization options
 const initOpts = {  //!! 
-    envPath: 'images/Bridge2',  //!! Environment texture (CubeMapTexture)
+    envPath: 'images/bridge',   //!! Environment texture (CubeMapTexture)
     models: [                   //!! GLTF models
-        'models/prebuilds/grounds/ground1.gltf',
-        'models/prebuilds/boxes/box1.gltf',
-        'models/prebuilds/boxes/box2.gltf',
-        'models/prebuilds/boxes/box3.gltf',
+        'models/scene001.gltf', //!! Grround, Walls and Basic Primitive objects
+        'models/boxes001.gltf', //!! Textured boxes
     ]
 };
 
@@ -113,9 +116,9 @@ const engine = new Engine({
 
 //!! Engine initialization options
 const initOpts = {  //!! 
-    envPath: 'images/Bridge2',  //!! Environment texture (CubeMapTexture)
+    envPath: 'images/bridge',   //!! Environment texture (CubeMapTexture)
     models: [                   //!! GLTF models
-        'models/prebuilds/grounds/ground1.gltf',
+        'models/scene001.gltf', //!! Grround, Walls and Basic Primitive objects
     ]
 };
 
@@ -126,7 +129,7 @@ engine.init( initOpts ).then( ( params ) => {
 });
 
 //!! Target
-const TARGET_MESH_NAME = 'CubeBrick1';      //!! Target mesh name exported from the Blender   
+const TARGET_MESH_NAME = 'Cube002';         //!! Target mesh name exported from Blender   
 var targetMesh = undefined;                 //!! Target mesh will be used in userInit and loop/callback
 
 //!! User initialization function
@@ -142,8 +145,7 @@ function uerInit( params ) {
 
 var alpha = 0;  //!! Rotation angle
 function callback( args ) {
-
-    if( !targetMesh ) return;   //!! If the targetMesh is not defined, do nothing
+    if( !targetMesh ) return;
 
     //!! Rotation
     targetMesh.rotation.x += Math.PI/100;
@@ -166,21 +168,21 @@ const engine = new Engine({
     }
 });
 //!! Engine initialization options
-const initOpts = {              //!! Initialization options
-    envPath: 'images/Bridge2',  //!! Environment texture (CubeMapTexture)
+const initOpts = {  //!! 
+    envPath: 'images/bridge',   //!! Environment texture (CubeMapTexture)
     models: [                   //!! GLTF models
-        'models/prebuilds/grounds/ground1.gltf',
+        'models/scene001.gltf', //!! Grround, Walls and Basic Primitive objects
     ]
 };
 
 //!! Initialise the engine with the given options, the initOpts object
 engine.init( initOpts ).then( ( params ) => {
-    uerInit( params );                      //!! Execute the userInit function
+    uerInit( params )
     engine.start( callback );               //!! Start and provide the callback function
 });
 
 //!! Target
-const TARGET_MESH_NAME = 'CubeBrick1';      //!! Target mesh name exported from the Blender   
+const TARGET_MESH_NAME = 'Cube002';         //!! Target mesh name exported from Blender   
 var targetBody = undefined;                 //!! Target body will be used in userInit and loop/callback
 
 //!! User initialization function
@@ -193,14 +195,14 @@ function uerInit( params ) {
         console.error('Cannot find rigid body of the "' + TARGET_MESH_NAME + '" in the current scene!');
     }
 
-    //!! See its details in the console window
+    //!! See in the console window
     console.log( targetBody );
 }
 //!! Engine callback function
 function callback( args ) {
-    if( !targetBody ) return;    //!! If the targetMesh is not defined, do nothing
+    if( !targetBody ) return;
 
-    //!! Angular velocity of the y-axis (make it rotate)
+    //!! Angular velocity of the y-axis
     targetBody.angularVelocity.set(0, 10, 0);
 }
 ```
@@ -215,20 +217,20 @@ const engine = new Engine({
     }
 });
 //!! Engine initialization options
-const initOpts = {              //!! Initialization options
-    envPath: 'images/Bridge2',  //!! Environment texture (CubeMapTexture)
+const initOpts = {  //!! 
+    envPath: 'images/park',     //!! Environment texture (CubeMapTexture)
     models: [                   //!! GLTF models
-        'models/prebuilds/grounds/ground1.gltf',
+        'models/scene001.gltf', //!! Grround, Walls and Basic Primitive objects
     ]
 };
 //!! Initialise the engine with the given options, the initOpts object
 engine.init( initOpts ).then( ( params ) => {
-    uerInit( params );                      //!! Execute the userInit function
+    uerInit( params )
     engine.start( callback );               //!! Start and provide the callback function
 });
 
 //!! Target
-const TARGET_MESH_NAME = 'CubeBrick1';      //!! Target mesh name exported from Blender   
+const TARGET_MESH_NAME = 'Cube002';         //!! Target mesh name exported from Blender    
 var targetBody = undefined;                 //!! Target body will be used in userInit and loop/callback
 
 //!! User initialization function
@@ -244,12 +246,12 @@ function uerInit( params ) {
 
 //!! Engine callback function
 function callback( args ) {
-    if( !targetBody ) return;               //!! If the targetMesh is not defined, do nothing
+    if( !targetBody ) return;
 
-    if( engine.getKeyDown('a') ) {          //!! If the 'a' key is pressed, rotate +y
+    if( engine.getKeyDown('a') ) {
         targetBody.angularVelocity.set(0, +10, 0);
     }
-    else if( engine.getKeyDown('d') ) {     //!! If the 'd' key is pressed, rotate -y
+    else if( engine.getKeyDown('d') ) {
         targetBody.angularVelocity.set(0, -10, 0);
     }
 }
@@ -261,31 +263,31 @@ function callback( args ) {
 //!! Create the engine and enable the physics, disable grids
 const engine = new Engine({
     physics:{
-        enabled: true,      //!! Enable the physics engine
+        enabled: true,     //!! Enable the physics engine
     },
     graphics: {
         grids: {
-            enabled: false, //!! Disable the grids
+            enabled: false,
         }
     }
 });
 
 //!! Engine initialization options
-const initOpts = {              //!! Initialization options
-    envPath: 'images/Bridge2',  //!! Environment texture (CubeMapTexture)
+const initOpts = {  //!! 
+    envPath: 'images/bridge',   //!! Environment texture (CubeMapTexture)
     models: [                   //!! GLTF models
-        'models/prebuilds/grounds/ground1.gltf',
+        'models/scene001.gltf', //!! Grround, Walls and Basic Primitive objects
     ]
 };
 
 //!! Initialise the engine with the given options, the initOpts object
 engine.init( initOpts ).then( ( params ) => {
-    uerInit( params );                      //!! Execute the userInit function
+    uerInit( params )
     engine.start( callback );               //!! Start and provide the callback function
 });
 
 //!! Target
-const TARGET_MESH_NAME = 'CubeBrick3';      //!! Target mesh name exported from Blender   
+const TARGET_MESH_NAME = 'Sphere001';       //!! Target mesh name exported from Blender   
 var targetBody = undefined;                 //!! Target body will be used in userInit and loop/callback
 
 //!! User initialization function
@@ -298,14 +300,14 @@ function uerInit( params ) {
         console.error('Cannot find rigid body of the "' + TARGET_MESH_NAME + '" in the current scene!');
     }
 
-    //!! Add axes to the target mesh, the threemesh of the rigid body
-    engine.addAxesToMesh( targetBody.threemesh, 3 );    //!! 3 is the axes size
+    //!! Add axes to the target mesh, the threemesh of the rigidbody
+    engine.addAxesToMesh( targetBody.threemesh, 3 );
 }
 
 //!! Apply force to the position of the target body
 function addForce( forceVector,  forceScale) {
-    var targetPoint = new Engine.Vec3(0, 0, 0);     //!! Create a zero vector
-    targetPoint.copy( targetBody.position );        //!! Copy the target position
+    var targetPoint = new Engine.Vec3(0, 0, 0); //!! Create a vector
+    targetPoint.copy( targetBody.position );    //!! Copy the target position
 
     //!! Apply the scaled force vector to the target point
     targetBody.applyForce( forceVector.mult(forceScale), targetPoint );
@@ -313,21 +315,21 @@ function addForce( forceVector,  forceScale) {
 
 //!! Apply impulse to the position of the target body
 function addImpulse( impulseVector,  impulseScale) {
-    var targetPoint = new Engine.Vec3(0, 0, 0);     //!! Create a zero vector
-    targetPoint.copy( targetBody.position );        //!! Copy the target position
+    var targetPoint = new Engine.Vec3(0, 0, 0); //!! Create a vector
+    targetPoint.copy( targetBody.position );    //!! Copy the target position
 
-    //!! Apply the scaled impulse vector to the target point (orgin of the target)
+    //!! Apply the scaled impulse vector to the target point
     targetBody.applyImpulse( impulseVector.mult(impulseScale), targetPoint );
 }
 
 //!! Force and Impulse scales
-const FORCE_SCALE   = 20;   //!! Force scale
-const IMPULSE_SCALE = 1;    //!! Impulse scale
+const FORCE_SCALE   = 20;
+const IMPULSE_SCALE = 1;
 
 //!! Engine callback function
 function callback( args ) {
 
-    if( !targetBody ) return;    //!! If the targetMesh is not defined, do nothing
+    if( !targetBody ) return;
 
     //!!
     //!! Force
@@ -380,27 +382,27 @@ const engine = new Engine({
     },
     graphics: {
         grids: {
-            enabled: false,     //!! Disable the helper grids
+            enabled: false,     //!! Disable grids
         }
     }
 });
 
 //!! Engine initialization options
-const initOpts = {              //!! Initialization options
-    envPath: 'images/Bridge2',  //!! Environment texture (CubeMapTexture)
+const initOpts = {  //!! 
+    envPath: 'images/bridge',   //!! Environment texture (CubeMapTexture)
     models: [                   //!! GLTF models
-        'models/prebuilds/grounds/ground1.gltf',
+        'models/scene001.gltf', //!! Grround, Walls and Basic Primitive objects
     ]
 };
 
 //!! Initialise the engine with the given options, the initOpts object
 engine.init( initOpts ).then( ( params ) => {
-    uerInit( params );                      //!! Execute the userInit function
+    uerInit( params )
     engine.start( callback );               //!! Start and provide the callback function
 });
 
 //!! Target
-const TARGET_MESH_NAME = 'SphereBall1';     //!! Target mesh name exported from the Blender   
+const TARGET_MESH_NAME = 'Sphere001';       //!! Target mesh name exported from Blender   
 var targetBody = undefined;                 //!! Target body will be used in userInit and loop/callback
 
 //!! User initialization function
@@ -422,28 +424,28 @@ function uerInit( params ) {
 
 //!! Apply local force to the center of the target body
 function addLocalForce( forceVector,  forceScale) {
-    var targetPoint = new Engine.Vec3(0, 0, 0);     ///!! Origin of the target
+    var targetPoint = new Engine.Vec3(0, 0, 0); ///!! Origin of the target
 
-    //!! Apply the scaled local force vector to the target (origin of the target)
+    //!! Apply the scaled local force vector to the target
     targetBody.applyLocalForce( forceVector.mult(forceScale), targetPoint );
 }
 
 //!! Apply local impulse to the center of the target body
 function addLocalImpulse( impulseVector,  impulseScale) {
-    var targetPoint = new Engine.Vec3(0, 0, 0);     //!! Origin of the target
+    var targetPoint = new Engine.Vec3(0, 0, 0); //!! Origin of the target
 
-    //!! Apply the scaled local impulse vector to the target (origin of the target)
+    //!! Apply the scaled local impulse vector to the target
     targetBody.applyLocalImpulse( impulseVector.mult(impulseScale), targetPoint );
 }
 
 //!! Local Force and Local Impulae scales
-const LOCAL_FORCE_SCALE   = 20;     //!! Force scale
-const LOCAL_IMPULSE_SCALE = 1;      //!! Impulse scale
+const LOCAL_FORCE_SCALE   = 20;
+const LOCAL_IMPULSE_SCALE = 1;
 
 //!! Engine callback function
 function callback( args ) {
 
-    if( !targetBody ) return;       //!! If the targetMesh is not defined, do nothing
+    if( !targetBody ) return;
 
     //!!
     //!! Local Force
@@ -489,38 +491,38 @@ function callback( args ) {
 ***
 **Example-11: Physics Materials (Ground and Object Materials**
 ```javascript
+//!! Create the engine
 const engine = new Engine({
     physics:{
         enabled:  true,     //!! Enable the physics engine
-        useDebug: true,
-        debugColor: 0x448877
     },
     graphics: {
         grids: {
-            enabled: false, //!! Disable the helper grids
+            enabled: false,
+        },
+        pointLight:{
+            enabled: true,
         }
     }
 });
 
 //!! Engine initialization options
-const initOpts = {              //!! Initialization options 
-    envPath: 'images/Bridge2',  //!! Environment texture (CubeMapTexture)
+const initOpts = {  //!! 
+    envPath: 'images/bridge',   //!! Environment texture (CubeMapTexture)
     models: [                   //!! GLTF models
-        'models/prebuilds/grounds/ground1.gltf',
+        'models/scene001.gltf', //!! Grround, Walls and Basic Primitive objects
     ]
 };
 
 //!! Initialise the engine with the given options, the initOpts object
 engine.init( initOpts ).then( ( params ) => {
-    uerInit( params );                      //!! Execute the userInit function
+    uerInit( params )
     engine.start( callback );               //!! Start and provide the callback function
 });
 
-
-//!! Targets
-const GROUND_MESH_NAME = 'StaticCube';      //!! Ground mesh name exported from the Blender   
-const TARGET_MESH_NAME = 'SphereBall1';     //!! Ball mesh name exported from the Blender   
-var targetBody = undefined;                 //!! Target body will be used in userInit and loop/callback
+const GROUND_MESH_NAME = 'CubeStaticGround';    //!! Ground mesh name exported from the Blender   
+const TARGET_MESH_NAME = 'Sphere001';           //!! Target mesh name exported from Blender   
+var targetBody = undefined;                     //!! Target body will be used in userInit and loop/callback
 
 function uerInit( params ) {
 
@@ -560,8 +562,8 @@ function uerInit( params ) {
 }
 
 
-//!! Apply force to the position (origin) of the target body
-function addForce( forceVector,  forceScale ) {
+//!! Apply force to the position of the target body
+function addForce( forceVector,  forceScale) {
     var targetPoint = new Engine.Vec3(0, 0, 0); //!! Create a vector
     targetPoint.copy( targetBody.position );    //!! Copy the target position
 
@@ -569,7 +571,7 @@ function addForce( forceVector,  forceScale ) {
     targetBody.applyForce( forceVector, targetPoint );
 }
 
-//!! Apply impulse to the position (origin) of the target body
+//!! Apply impulse to the position of the target body
 function addImpulse( impulseVector,  impulseScale) {
     var targetPoint = new Engine.Vec3(0, 0, 0); //!! Create a vector
     targetPoint.copy( targetBody.position );    //!! Copy the target position
@@ -579,14 +581,12 @@ function addImpulse( impulseVector,  impulseScale) {
 }
 
 
-//!! Force and Impluse scales
-const FORCE_SCALE   = 20;   //!! Force scale
-const IMPULSE_SCALE = 1;    //!! Impulse scale
+const FORCE_SCALE   = 20;
+const IMPULSE_SCALE = 1;
 
-//!! Engine callback function
 function callback( args ) {
 
-    if( !targetBody ) return;   //!! If the targetMesh is not defined, do nothing
+    if( !targetBody ) return;
 
     //!!
     //!! Force
@@ -628,3 +628,207 @@ function callback( args ) {
     }
 }
 ```
+
+**Example-12: Show/Hide Body-Debugger and Labels**
+```javascript
+//!! Create the engine with physics enabled
+const engine = new Engine({
+    physics:{
+        enabled:  true,     //!! Enable the physics engine
+        debug: {
+            enabled: true,
+            color: 0xffff00,
+        }
+    },
+});
+
+//!! Initialization options
+const initOpts = {
+    envPath: 'images/park',     //!! Environmant directory
+    models: [ 
+        'models/scene001.gltf', //!! Ground and basic primitive objects
+        'models/boxes001.gltf', //!! Textured boxes
+    ]
+};
+
+//!! Initialze and start the engine
+engine.init( initOpts ).then( () => {
+    engine.start( callback );
+});
+
+
+const KEY_DELAY = 1000; //!! Key delay (1000 is 1 second)
+
+//!! Callback function
+function callback() {
+
+    //!! Apply force to raycasted object
+    if( engine.getKeyDown('f', KEY_DELAY) ) {
+        engine.applyForceToRayBody( 500 );              //!! Apply force to raycasted body
+    }
+
+    //!! Debug
+    else if( engine.getKeyDown('m', KEY_DELAY) ) {      //!! Show/Hide debug meshes
+        engine.toggleDebug();
+    }
+
+    //!! Labels
+    else if( engine.getKeyDown('l', KEY_DELAY) ) {      //!! Show/Hide labels
+        engine.toggleLabels();
+    }
+}
+```
+
+***
+
+**Example-13: Raycasting with Force and Impulse**
+```javascript
+//!! Create the engine with physics enabled
+const engine = new Engine({
+    physics:{
+        enabled:  true,         //!! Enable the physics engine
+        debug:{
+            enabled: true,      //!! Disable mesh debugging
+        }       
+    },
+});
+
+//!! Initialization options
+const initOpts = {
+
+    envPath: 'images/park',     //!! Environmant directory
+    models: [ 
+        'models/scene001.gltf', //!! Ground and basic primitive objects
+        'models/boxes001.gltf', //!! Textured boxes
+    ]
+};
+
+//!! Initialze and start the engine
+engine.init( initOpts ).then( () => {
+    engine.start( callback );
+});
+
+
+const KEY_DELAY     = 1000; //!! Key delay (1000 is 1 second)
+const FORCE_SCALE   = 500;  //!! Force scale
+const IMPULSE_SCALE = 10;   //!! Imnpulse scale
+
+//!! Callback function
+function callback() {
+
+    if( engine.getKeyDown('r', KEY_DELAY) ) {           
+        var rc = engine.doRaycast();                    //!! Do raycast and receive raycasted objects
+        console.log(rc);
+    }
+    else if( engine.getKeyDown('t', KEY_DELAY) ) {
+        var ray = engine.getRay();                      //!! Get Ray object
+        console.log(ray);
+    }
+    else if( engine.getKeyDown('y', KEY_DELAY) ) {
+        var ints = engine.getRayIntersec();             //!! Get RayIntersec object
+        console.log(ints);
+    }
+    else if( engine.getKeyDown('f', KEY_DELAY) ) {
+        engine.applyForceToRayBody( FORCE_SCALE );      //!! Apply force to raycasted body
+    }
+    else if( engine.getKeyDown('g', KEY_DELAY) ) {
+        engine.applyImpulseToRayBody( IMPULSE_SCALE );  //!! Apply force to raycasted body
+    }
+
+    //!! Debug
+    else if( engine.getKeyDown('m', KEY_DELAY) ) {      //!! Show/Hide debug meshes
+        engine.toggleDebug();
+    }
+
+    //!! Labels
+    else if( engine.getKeyDown('l', KEY_DELAY) ) {      //!! Show/Hide labels
+        engine.toggleLabels();
+    }
+}
+```
+
+***
+
+**Example-14: Models and Assets Loading**
+```javascript
+//!! Create the engine with physics enabled
+const engine = new Engine({
+    physics:{
+        enabled:  true,         //!! Enable the physics engine
+        useDebug: false,        //!! Disable mesh debugging
+    },
+});
+
+//!! Initialization options
+const initOpts = {
+
+    envPath: 'images/park',     //!! Environmant directory
+    models: [ 
+        'models/scene001.gltf', //!! Ground and basic primitive objects
+    ]
+};
+
+//!! Initialze and start the engine
+engine.init( initOpts ).then( () => {
+    engine.start( callback );
+});
+
+
+const KEY_DELAY     = 1000; //!! Key delay (1000 is 1 second)
+const FORCE_SCALE   = 500;  //!! Force scale
+const IMPULSE_SCALE = 10;   //!! Imnpulse scale
+
+var model_loaded = false;   //!! model loaded flag
+var asset_loaded = false;   //!! asset loaded flag
+
+//!! Callback function
+function callback() {
+
+    //!! Loading
+    if( engine.getKeyDown('[', KEY_DELAY) ) {
+        if(model_loaded === true) return;   //!! model was loaded, return
+        model_loaded = true;
+        engine.loadModel('models/boxes001.gltf', function( gltf ){
+            engine.printInfo('The boxes001 is loaded!'); 
+        });
+    }
+    else if( engine.getKeyDown(']', KEY_DELAY) ) {
+        if(asset_loaded === true) return;   //!! Asset was loaded, return
+        asset_loaded = true;
+        engine.loadAssets('models/actor001.gltf', function( args ){
+            engine.printInfo('The actor001 is loaded!');   
+        });
+    }
+
+    //!! Raycast
+    else if( engine.getKeyDown('r', KEY_DELAY) ) {           
+        var rc = engine.doRaycast();                    //!! Do raycast and receive raycasted objects
+        console.log(rc);
+    }
+    else if( engine.getKeyDown('t', KEY_DELAY) ) {
+        var ray = engine.getRay();                      //!! Get Ray object
+        console.log(ray);
+    }
+    else if( engine.getKeyDown('y', KEY_DELAY) ) {
+        var ints = engine.getRayIntersec();             //!! Get RayIntersec object
+        console.log(ints);
+    }
+    else if( engine.getKeyDown('f', KEY_DELAY) ) {
+        engine.applyForceToRayBody( FORCE_SCALE );      //!! Apply force to raycasted body
+    }
+    else if( engine.getKeyDown('g', KEY_DELAY) ) {
+        engine.applyImpulseToRayBody( IMPULSE_SCALE );  //!! Apply force to raycasted body
+    }
+
+    //!! Debug
+    else if( engine.getKeyDown('m', KEY_DELAY) ) {      //!! Show/Hide debug meshes
+        engine.toggleDebug();
+    }
+
+    //!! Labels
+    else if( engine.getKeyDown('l', KEY_DELAY) ) {      //!! Show/Hide labels
+        engine.toggleLabels();
+    }
+}
+```
+***

@@ -3,7 +3,7 @@
  * 
  * Dr.Santi Nuratch
  * Embedded Computing and Control Laboratory
- *  22 February, 2019
+ * 22 February, 2019
  */
 
 //!! Import the ECC-CGP-Engine
@@ -23,9 +23,9 @@ const engine = new Engine({
 
 //!! Engine initialization options
 const initOpts = {  //!! 
-    envPath: 'images/Bridge2',  //!! Environment texture (CubeMapTexture)
+    envPath: 'images/bridge',   //!! Environment texture (CubeMapTexture)
     models: [                   //!! GLTF models
-        'models/prebuilds/grounds/ground1.gltf',
+        'models/scene001.gltf', //!! Grround, Walls and Basic Primitive objects
     ]
 };
 
@@ -36,7 +36,7 @@ engine.init( initOpts ).then( ( params ) => {
 });
 
 //!! Target
-const TARGET_MESH_NAME = 'SphereBall1';      //!! Target mesh name exported from Blender   
+const TARGET_MESH_NAME = 'Sphere001';       //!! Target mesh name exported from Blender   
 var targetBody = undefined;                 //!! Target body will be used in userInit and loop/callback
 
 //!! User initialization function

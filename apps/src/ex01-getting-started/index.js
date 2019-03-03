@@ -3,11 +3,11 @@
  * 
  * Dr.Santi Nuratch
  * Embedded Computing and Control Laboratory
- *  22 February, 2019
+ * 22 February, 2019
  */
 
 //!! Import the ECC-CGP-Engine
-import Engine from '../libs/ECC-CGP-Engine';    //!! Loacl
+import Engine from '../libs/ECC-CGP-Engine';    //!! Local
 // import Engine from 'ECC-CGP-Engine';         //!! NPM
 
 
@@ -21,7 +21,7 @@ import Engine from '../libs/ECC-CGP-Engine';    //!! Loacl
     engine.printInfo( "Engine started. Please wait..." );
     setTimeout( () => {
         engine.stop();      //!! Stop the engine
-        engine.printInfo( "Engine stopped" );
+        engine.printInfo( "Engine stopped. Refresh the browser to try again" );
     }, 5000);
  });
  
