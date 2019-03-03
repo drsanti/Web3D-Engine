@@ -1,4 +1,5 @@
 
+![screenshort](https://github.com/drsanti/INC691-2019/blob/master/apps/public/images/snapshot001.png)
 
 **Example-01: Getting Started**
 ```javascript
