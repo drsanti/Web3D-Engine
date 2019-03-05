@@ -12,13 +12,18 @@
 // const __exdir__  = 'ex11-physics-materials';
 // const __exdir__  = 'ex12-show-hide-debug-labels';
 // const __exdir__  = 'ex13-raycast-force-impulse';
-const __exdir__  = 'ex14-models-assets-loading';
+// const __exdir__  = 'ex14-models-assets-loading';
+// const __exdir__  = 'ex15-distance-constraint';
+//const __exdir__  = 'ex16-point2point-constraint';
+const __exdir__  = 'ex17-point2point-line-buffer-geometry';
+
 
 //!!
 //!!
-const __mode__   = 'app';
+const __mode__   = 'dev';
 //!!
 //!!
+
 
 const config = {
   app: {
@@ -31,6 +36,7 @@ const config = {
 }
 
 const path = require('path');
+
 module.exports = {
   entry: (__mode__ === 'app') ? './' + config.app.root + '/src/' + config.app.main  :  './src/' + config.dev.main,
   mode: 'development',
@@ -60,5 +66,5 @@ module.exports = {
         loader:'style-loader!css-loader'
       }
     ]
-  }
+  },
 };

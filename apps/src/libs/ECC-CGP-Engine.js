@@ -239,366 +239,24 @@ export default class Engine {
 
 
     /**********************************************************************************************************/
-    /*       Mesh Utility      Mesh Utility       Mesh Utility       Mesh Utility       Mesh Utility          */
-    /**********************************************************************************************************/
-
-    /**
-     * Returns a mesh specified by the mesh name
-     * @param {string} name mesh name
-     * @return THREE.Mesh
-     */
-    getMeshByName( name ) {
-        return this.core.graphics.getMeshByName( name );
-    }
-
-    /**
-     * Returns meshes (excludes helpers, lights and debuggers) in the current scene
-     * @return array of THREE.Mesh
-     */
-    getAllMeshes() {
-        return this.core.graphics.getMeshes();
-    }
-
-    /**
-     * Returns meshes (excludes helpers, lights and debuggers) in the current scene
-     * @return array of THREE.Mesh
-     */
-    getMeshes() {
-        return this.core.graphics.getMeshes();
-    }
-
-    /**
-     * Return all meshes (array of meshes) in the provided scene. If the scene is not provided, the current scene will be used as target scene
-     * @param {THREE.Scene} scene target scene
-     * @return array of THREE.Mesh
-     */
-    getMeshesFromScene( scene ) {
-        return this.core.graphics.getMeshesFromScene( scene ); 
-    }
-
-
-    /**
-     * Adds axes to the spefied mesh
-     * @param {THREE.Mesh} mesh THREE Mesh
-     * @param {number} size Axes size
-     */
-    addAxesToMesh( mesh, size ) {
-        return this.core.graphics.addAxesToMesh( mesh, size );
-    }
-
-
-    /**
-     * Removes axes to the spefied mesh
-     * @param {THREE.Mesh} mesh THREE Mesh
-     */
-    removeAxesFromMesh( mesh ) {
-        return this.core.graphics.removeAxesFromMesh( mesh );
-    }
-
-
-    /**
-     * Adds axes to all meshes in the currentt scene
-     * @param {number} size Axes size
-     */
-    addAxesToAllMeshes( size ) {
-        return this.core.graphics.addAxesToAllMeshes( size );
-    }
-
-    /**
-     * Removes axes from all meshes in the currentt scene
-     */
-    removeAxesFromAllMeshes( ) {
-        return this.core.graphics.removeAxesFromAllMeshes();
-    }
-
-    /**
-     * Apply reflection map to all meshes
-     */
-    applyReflectionMapToAllMeshes() {
-        return this.core.graphics.applyReflectionMap( undefined );
-    }
-
-    /**
-     * Remove reflection map from all meshes
-     */
-    removeReflectionMapFromAllMeshes() {
-        return this.core.graphics.removeReflectionMap( undefined );
-    }
-
-    /**********************************************************************************************************/
-    /*        Body Utility      Body Utility       Body Utility       Body Utility       Body Utility         */
-    /**********************************************************************************************************/
-
-    /**
-     * Returns a rigid body specified by mesh name
-     * @param {string} name mesh name
-     * @return CANNON.Body
-     */
-    getBodyByMeshName( name ) {
-        return this.core.physics.getBodyByMeshName( name );
-    }
-
-
-    /**
-     * Returns all rigid bodies (array of bodies) in the current world
-     * @return array of CANNON.Body
-     */
-    getBodiesFromWorld() {
-        return this.core.physics.world.bodies;
-    }
-
-    /**
-     * Returns all rigid bodies (array of bodies) in the current world
-     * @return array of CANNON.Body
-     */
-    getBodies() {
-        return this.core.physics.world.bodies;
-    }
-
-
-    /**
-     * Set/Change the provided body to static body
-     * @param {CANNON.Body} body 
-     */
-    setBodyToStatic( body ) {
-        return this.core.physics.changeBodyToStatic( body );
-    }
-
-
-    /**
-     * Set/Change the provided body to dynamic body
-     * @param {CANNON.Body} body 
-     */
-    setBodyToDynamic( body, mass ) {
-        return this.core.physics.changeBodyToDynamic( body, mass );
-    }
-
-
-
-    /**********************************************************************************************************/
-    /*  Physics Materials   Physics Materials    Physics Materials    Physics Materials    Physics Materials  */
-    /**********************************************************************************************************/
-
-    /**
-     * Creates and returns ground material. The created material is added to the physics world internally
-     * @param {number} friction     Ground friction
-     * @param {number} restitution  Ground restitution
-     * @return CANNON.Material
-     */
-    createGroundMaterial( friction, restitution ) {
-        return this.core.physics.createGroundMaterial( friction, restitution );
-    }
-
-
-    /**
-     * Creates and returns object (body) material. The created material is added to the physics world internally
-     * @param {number} friction     Object friction
-     * @param {number} restitution  Object restitution
-     * @return CANNON.Material
-     */
-    createObjectMaterial( friction, restitution, groundMaterial ) {
-        return this.core.physics.createObjectMaterial( friction, restitution, groundMaterial );
-    }
-
-
-    /**********************************************************************************************************/
-    /*   Keyboard      Keyboard       Keyboard       Keyboard       Keyboard       Keyboard        Keyboard   */
-    /**********************************************************************************************************/
-
-    /**
-     * Check key pressed, return true if the desired key is pressed
-     * @param {string} key      a character or key name
-     * @param {number} interval time between each key pressed
-     * @return boolean
-     */
-    getKeyDown( key, interval ) {
-        return this.core.keyboard.getKeyDown( key, interval );
-    }
-
-
-
-
-    /**********************************************************************************************************/
-    /*       Raycaster      Raycaster       Raycaster       Raycaster       Raycaster       Raycaster         */
-    /**********************************************************************************************************/
-
-    /**
-     * Returns raycasting parameters of all objects
-     */
-    doRaycast() {
-        return this.core.raycaster.doRaycast();
-    }
-
-    /**
-     * Returns raycasting parameters of the first object
-     */
-    getRaycast() {
-        const raycast = this.core.raycaster.doRaycast();
-        if(raycast.length < 1) return undefined;
-        return raycast[0];
-    }
-
-
-    //!!---------------- Ray -------------------------------------------
-
-    /**
-     * Return Ray of the raycasting operation
-     * @return object { mesh, intersecs, ray }
-     */
-    getRay() {
-        return this.getRaycast().ray;
-    }
-
-    /**
-     * Return RayDirection of the raycasting operation
-     * @return ray.direction
-     */
-    getRayDirection() { 
-        const ray = this.getRay();
-        if(!ray) return undefined;
-        return new CANNON.Vec3(ray.direction.x, ray.direction.y, ray.direction.z); 
-    }
-
-    /**
-     * Return RayOrigin of the raycasting operation
-     * @return ray.origin
-     */
-    getRayOrigin() {
-        const ray = this.getRay();
-        if(!ray) return undefined;
-        return new CANNON.Vec3(ray.origin.x, ray.origin.y, ray.origin.z);
-    }
-
-
-    //!!-----------------------------------------------------------------
-    //!!---------------- Intersect --------------------------------------
-    //!!-----------------------------------------------------------------
-
-    /**
-     * Return RayIntersec of the raycasting operation
-     * @return intersect
-     */
-    getRayIntersec() {
-        const raycast = this.getRaycast();
-        return raycast.intersect;
-    }
-
-    /**
-     * Return RayDistance of the raycasting operation
-     * @return intersect.distance
-     */
-    getRayDistance() {
-        const raycast = this.getRaycast();
-        const intersect = raycast.intersect;
-        if(!intersect) return undefined;
-        return intersect.distance;
-    }
-
-    /**
-     * Return RayPoint of the raycasting operation
-     * @return intersect.point
-     */
-    getRayPoint() {
-        const raycast = this.getRaycast();
-        const intersect = raycast.intersect;
-        if(!intersect) return undefined;
-        return new CANNON.Vec3(intersect.point.x, intersect.point.y, intersect.point.z);
-    }
-    //!!---------------- END Intersect -----------------------------------
-
-
-
-    /**
-     * Return RayObject of the raycasting operation
-     * @return intersect.object
-     */
-    getRayMesh() {
-        const raycast = this.getRaycast();
-        const mesh = raycast.mesh;
-        if( mesh && mesh.parent && mesh.parent instanceof THREE.Group ) {
-            return mesh.parent;
-        }
-        return mesh;
-    }
-
-    /**
-     * Returns a rigid body of the raycasting operation
-     * @return CANNON.Body
-     */
-    getRayBody() {
-        const raycast = this.getRaycast();
-        if( raycast.mesh ) {
-            return this.getBodyByMeshName( raycast.mesh.name );
-        }
-        return undefined;
-    }
-
-    /**
-     * Helper function to apply force and impulse to world point ro local point
-     * @param {number} scale force or impulse scale
-     * @param {number} type  0: force, 1: local force, 2: impulse, 3: local impulse
-     * @return CANNON.Body
-     */
-    applyForceImpulseWorldLocal( scale, type ) {
-        const raycast = this.getRaycast();
-        if(!raycast) return undefined;
-        const direction = new CANNON.Vec3(raycast.ray.direction.x,   raycast.ray.direction.y,   raycast.ray.direction.z);
-        const point     = new CANNON.Vec3(raycast.intersect.point.x, raycast.intersect.point.y, raycast.intersect.point.z);
-        const body = this.getBodyByMeshName( raycast.mesh.name );
-        if( !body ) return
-        if( type === 0 ) {
-            body.applyForce( direction.mult(scale), point );    
-        }else if( type === 1 ){
-            body.applyLocalForce( direction.mult(scale), point );    
-        }else if( type === 2 ){
-            body.applyImpulse( direction.mult(scale), point );    
-        }else if( type === 3 ){
-            body.applyLocalImpulse( direction.mult(scale), point );    
-        }
-        return body;
-    }
-
-    /**
-     * Apply force to raycased rigid body
-     * @param {number} forceScale force scale to be applied to the raycasted body
-     * @return CANNON.Body
-     */
-    applyForceToRayBody( forceScale ) {
-        return this.applyForceImpulseWorldLocal(forceScale, 0);
-    }
-
-    /**
-     * Apply local force to raycased rigid body
-     * @param {number} forceScale force scale to be applied to the raycasted body
-     * @return CANNON.Body
-     */
-    applyLocalForceToRayBody( forceScale ) {
-        return this.applyForceImpulseWorldLocal(forceScale, 1);
-    }
-
-    /**
-     * Apply impulse to raycased rigid body
-     * @param {number} impulseScale impulse scale to be applied to the raycasted body
-     * @return CANNON.Body
-     */
-    applyImpulseToRayBody( impulseScale ) {
-        return this.applyForceImpulseWorldLocal(impulseScale, 2);
-    }
-
-    /**
-     * Apply local impulse to raycased rigid body
-     * @param {number} impulseScale impulse scale to be applied to the raycasted body
-     * @return CANNON.Body
-     */
-    applyLocalImpulseToRayBody( impulseScale ) {
-        return this.applyForceImpulseWorldLocal(impulseScale, 3);
-    }
-
-
-
-    /**********************************************************************************************************/
     /*         Graphics       Graphics        Graphics        Graphics        Graphics        Graphics        */
     /**********************************************************************************************************/
+
+    /**
+     * Returns graphics object
+     * @return graphics
+     */
+    getGraphics() {
+        return this.core.graphics; 
+    }
+
+    /**
+     * Returns the current scene object
+     * @return THREE.Scene
+     */
+    getScene() {
+        return this.core.graphics.scene;
+    }
 
     /**
      * Returns the main camera object
@@ -609,43 +267,71 @@ export default class Engine {
     }
 
     /**
-     * Returns the current scene object
-     * @return THREE.Scene
+     * Returns the current renderer object
+     * @return THREE.Renderer
      */
-    getScene() {
-        return this.core.graphics.scene;
-    }
-    
-    /**
-     * Returns current used controls
-     * @return THREE.Controls
-     */
-    getControls() {
-        return this.core.graphics.control;
+    getRenderer() {
+        return this.core.graphics.renderer;
     }
 
     /**
-     * Enables/Disables controls
+     * Returns current used control
      * @return THREE.Controls
      */
-    setControlsEnabled( enabled ) {
-        this.core.graphics.control.enabled = enabled;   
+    getControl() {
         return this.core.graphics.control;
     }
 
-     /**
-     * Set damping factor of controls
-     * @return THREE.Controls
-     */
-    setControlsDamping( damping ) {
-        this.core.graphics.control.damping = damping;
-        return this.core.graphic.control;
-    }
-    
+    /**********************************/
+    /*         Grids & Axes           */
+    /**********************************/
 
-    /**********************************************************************************************************/
-    /*    Light       Light        Light        Light        Light        Light        Light        Light     */
-    /**********************************************************************************************************/
+    /**
+     * Show grids helper
+     */
+    showGrids() {
+        this.core.graphics.addGrids();
+    }
+
+    /**
+     * Hide grids helper
+     */
+    hideGrids() {
+        this.core.graphics.removeGrids();
+    }
+
+    /**
+     * Toggle grids visibility
+     */
+    toggleGrids() {
+        this.core.graphics.toggleGrids();
+    }
+
+    /**
+     * Show axes helper
+     */
+    showAxes() {
+        this.core.graphics.addAxes();
+    }
+
+    /**
+     * Hide axes helper
+     */
+    hideAxes() {
+        this.core.graphics.removeAxes();
+    }
+
+    /**
+     * Toggle axes visibility
+     */
+    toggleAxes() {
+        this.core.graphics.toggleAxes();
+    }
+
+
+    /**********************************/
+    /*           Lights               */
+    /**********************************/
 
     /**
      * Returns array of ambient lights lights
@@ -712,6 +398,451 @@ export default class Engine {
         return light;
     }
 
+
+    /**********************************************************************************************************/
+    /*   Physics      Physics      Physics      Physics      Physics      Physics      Physics      Physics   */
+    /**********************************************************************************************************/
+
+    /**
+     * Returns physics object
+     */
+    getPhysics() {
+        return this.core.physics; 
+    }
+
+    /**
+     * Returns physics world
+     */
+    getWorld() {
+        return this.core.physics.world;
+    }
+
+    /**
+     * Creates and returns ground material. The created material is added to the physics world internally
+     * @param {number} friction     Ground friction
+     * @param {number} restitution  Ground restitution
+     * @return CANNON.Material
+     */
+    createGroundMaterial( friction, restitution ) {
+        return this.core.physics.createGroundMaterial( friction, restitution );
+    }
+
+    /**
+     * Creates and returns object (body) material. The created material is added to the physics world internally
+     * @param {number} friction     Object friction
+     * @param {number} restitution  Object restitution
+     * @return CANNON.Material
+     */
+    createObjectMaterial( friction, restitution, groundMaterial ) {
+        return this.core.physics.createObjectMaterial( friction, restitution, groundMaterial );
+    }
+
+
+    /**
+     * Returns a rigid body specified by mesh name
+     * @param {string} name mesh name
+     * @return CANNON.Body
+     */
+    getBodyByMeshName( name ) {
+        return this.core.physics.getBodyByMeshName( name );
+    }
+
+
+    /**
+     * Returns all rigid bodies (array of bodies) in the current world
+     * @return array of CANNON.Body
+     */
+    getBodiesFromWorld() {
+        return this.core.physics.world.bodies;
+    }
+
+    /**
+     * Returns all rigid bodies (array of bodies) in the current world
+     * @return array of CANNON.Body
+     */
+    getBodies() {
+        return this.core.physics.world.bodies;
+    }
+
+    /**
+     * Set/Change the provided body to static body
+     * @param {CANNON.Body} body 
+     */
+    setBodyToStatic( body ) {
+        return this.core.physics.changeBodyToStatic( body );
+    }
+
+    /**
+     * Set/Change the provided body to dynamic body
+     * @param {CANNON.Body} body 
+     */
+    setBodyToDynamic( body, mass ) {
+        return this.core.physics.changeBodyToDynamic( body, mass );
+    }
+
+    /**
+     * Show body-debugger
+     */
+    showDebug() {
+        return this.core.physics.bodyDebug.show();  
+    }
+
+     /**
+     * Hide body-debugger
+     */
+    hideDebug() {
+        return this.core.physics.bodyDebug.hide();  
+    }
+
+    /**
+     * Toggle body-debugger visibility
+     */
+    toggleDebug() {
+        return this.core.physics.bodyDebug.toggle();  
+    }
+    
+    /**
+     * Adds constraint to physics world
+     * @param {Constraint} constraint 
+     */
+    addConstraint( constraint ) {
+        this.core.physics.world.addConstraint( constraint );      
+    }
+
+    /**
+     * Removes constraint from physics world
+     * @param {Constraint} constraint 
+     */
+    removeConstraint( constraint ) {
+        this.core.physics.world.removeConstraint( constraint );      
+    }
+
+
+
+    /**********************************************************************************************************/
+    /*       Mesh Utility      Mesh Utility       Mesh Utility       Mesh Utility       Mesh Utility          */
+    /**********************************************************************************************************/
+
+    /**
+     * Returns a mesh specified by the mesh name
+     * @param {string} name mesh name
+     * @return THREE.Mesh
+     */
+    getMeshByName( name ) {
+        return this.core.graphics.getMeshByName( name );
+    }
+
+    /**
+     * Returns meshes (excludes helpers, lights and debuggers) in the current scene
+     * @return array of THREE.Mesh
+     */
+    getAllMeshes() {
+        return this.core.graphics.getMeshes();
+    }
+
+    /**
+     * Returns meshes (excludes helpers, lights and debuggers) in the current scene
+     * @return array of THREE.Mesh
+     */
+    getMeshes() {
+        return this.core.graphics.getMeshes();
+    }
+
+    /**
+     * Return all meshes (array of meshes) in the provided scene. If the scene is not provided, the current scene will be used as target scene
+     * @param {THREE.Scene} scene target scene
+     * @return array of THREE.Mesh
+     */
+    getMeshesFromScene( scene ) {
+        return this.core.graphics.getMeshesFromScene( scene ); 
+    }
+
+
+    /**
+     * Adds axes to the spefied mesh
+     * @param {THREE.Mesh} mesh THREE Mesh
+     * @param {number} size Axes size
+     */
+    addAxesToMesh( mesh, size ) {
+        this.core.graphics.addAxesToMesh( mesh, size );
+    }
+
+    /**
+     * Adds axes to the spefied body
+     * @param {CANNON.Body} body CANNON Body
+     * @param {number} size Axes size
+     */
+    addAxesToBody( body, size ) {
+        this.core.graphics.addAxesToMesh( body.threemesh, size );   
+    }
+
+
+    /**
+     * Removes axes from the spefied mesh
+     * @param {THREE.Mesh} mesh THREE Mesh
+     */
+    removeAxesFromMesh( mesh ) {
+        this.core.graphics.removeAxesFromMesh( mesh );
+    }
+
+    /**
+     * Removes axes from the spefied body
+     * @param {CANNON.Body} mesh TCANNON Body
+     */
+    removeAxesFromBody( mesh ) {
+        this.core.graphics.removeAxesFromMesh( mesh.threemesh );
+    }
+
+
+    /**
+     * Adds axes to all meshes in the currentt scene
+     * @param {number} size Axes size
+     */
+    addAxesToAllMeshes( size ) {
+        this.core.graphics.addAxesToAllMeshes( size );
+    }
+
+    /**
+     * Adds axes to all bodies in the currentt scene
+     * @param {number} size Axes size
+     */
+    addAxesToAllBodies( size ) {
+        var bodies = this.getBodies();
+        bodies.forEach(body => {
+            this.addAxesToBody( body );
+        });
+    }
+
+    /**
+     * Removes axes from all meshes in the currentt scene
+     */
+    removeAxesFromAllMeshes( ) {
+        return this.core.graphics.removeAxesFromAllMeshes();
+    }
+
+    /**
+     * Removes axes from all bodies in the currentt scene
+     */
+    removeAxesFromAllBodies( size ) {
+        var bodies = this.getBodies();
+        bodies.forEach(body => {
+            this.removeAxesFromBody( body );
+        });
+    }
+
+    /**
+     * Apply reflection map to all meshes
+     */
+    applyReflectionMapToAllMeshes() {
+        return this.core.graphics.applyReflectionMap( undefined );
+    }
+
+    /**
+     * Remove reflection map from all meshes
+     */
+    removeReflectionMapFromAllMeshes() {
+        return this.core.graphics.removeReflectionMap( undefined );
+    }
+
+
+    /**********************************************************************************************************/
+    /*   Keyboard      Keyboard       Keyboard       Keyboard       Keyboard       Keyboard        Keyboard   */
+    /**********************************************************************************************************/
+
+    /**
+     * Check key pressed, return true if the desired key is pressed
+     * @param {string} key      a character or key name
+     * @param {number} interval time between each key pressed
+     * @return boolean
+     */
+    getKeyDown( key, interval ) {
+        return this.core.keyboard.getKeyDown( key, interval );
+    }
+
+
+    /**********************************************************************************************************/
+    /*       Raycaster      Raycaster       Raycaster       Raycaster       Raycaster       Raycaster         */
+    /**********************************************************************************************************/
+
+    /**
+     * Returns raycasting parameters of all objects
+     */
+    doRaycast() {
+        return this.core.raycaster.doRaycast();
+    }
+
+    /**
+     * Returns raycasting parameters of the first object
+     */
+    getRaycast() {
+        const raycast = this.core.raycaster.doRaycast();
+        if(raycast.length < 1) return undefined;
+        return raycast[0];
+    }
+
+
+    /**********************************/
+    /*            Ray                 */
+    /**********************************/
+
+    /**
+     * Return Ray of the raycasting operation
+     * @return object { mesh, intersecs, ray }
+     */
+    getRay() {
+        return this.getRaycast().ray;
+    }
+
+    /**
+     * Return RayDirection of the raycasting operation
+     * @return ray.direction
+     */
+    getRayDirection() { 
+        const ray = this.getRay();
+        if(!ray) return undefined;
+        return new CANNON.Vec3(ray.direction.x, ray.direction.y, ray.direction.z); 
+    }
+
+    /**
+     * Return RayOrigin of the raycasting operation
+     * @return ray.origin
+     */
+    getRayOrigin() {
+        const ray = this.getRay();
+        if(!ray) return undefined;
+        return new CANNON.Vec3(ray.origin.x, ray.origin.y, ray.origin.z);
+    }
+
+
+    /**********************************/
+    /*          Intersec              */
+    /**********************************/
+
+    /**
+     * Return RayIntersec of the raycasting operation
+     * @return intersect
+     */
+    getRayIntersec() {
+        const raycast = this.getRaycast();
+        return raycast.intersect;
+    }
+
+    /**
+     * Return RayDistance of the raycasting operation
+     * @return intersect.distance
+     */
+    getRayDistance() {
+        const raycast = this.getRaycast();
+        const intersect = raycast.intersect;
+        if(!intersect) return undefined;
+        return intersect.distance;
+    }
+
+    /**
+     * Return RayPoint of the raycasting operation
+     * @return intersect.point
+     */
+    getRayPoint() {
+        const raycast = this.getRaycast();
+        const intersect = raycast.intersect;
+        if(!intersect) return undefined;
+        return new CANNON.Vec3(intersect.point.x, intersect.point.y, intersect.point.z);
+    }
+
+
+    /**********************************/
+    /*       Ray-Mesh, Ray-Body       */
+    /**********************************/
+
+    /**
+     * Return RayObject of the raycasting operation
+     * @return intersect.object
+     */
+    getRayMesh() {
+        const raycast = this.getRaycast();
+        const mesh = raycast.mesh;
+        if( mesh && mesh.parent && mesh.parent instanceof THREE.Group ) {
+            return mesh.parent;
+        }
+        return mesh;
+    }
+
+    /**
+     * Returns a rigid body of the raycasting operation
+     * @return CANNON.Body
+     */
+    getRayBody() {
+        const raycast = this.getRaycast();
+        if( raycast.mesh ) {
+            return this.getBodyByMeshName( raycast.mesh.name );
+        }
+        return undefined;
+    }
+
+    /**********************************/
+    /*    Ray-Force, Ray-Impulse      */
+    /**********************************/
+
+    /**
+     * Helper function to apply force and impulse to world point ro local point
+     * @param {number} scale force or impulse scale
+     * @param {number} type  0: force, 1: local force, 2: impulse, 3: local impulse
+     * @return CANNON.Body
+     */
+    applyForceImpulseWorldLocal( scale, type ) {
+        const raycast = this.getRaycast();
+        if(!raycast) return undefined;
+        const direction = new CANNON.Vec3(raycast.ray.direction.x,   raycast.ray.direction.y,   raycast.ray.direction.z);
+        const point     = new CANNON.Vec3(raycast.intersect.point.x, raycast.intersect.point.y, raycast.intersect.point.z);
+        const body = this.getBodyByMeshName( raycast.mesh.name );
+        if( !body ) return
+        if( type === 0 ) {
+            body.applyForce( direction.mult(scale), point );    
+        }else if( type === 1 ){
+            body.applyLocalForce( direction.mult(scale), point );    
+        }else if( type === 2 ){
+            body.applyImpulse( direction.mult(scale), point );    
+        }else if( type === 3 ){
+            body.applyLocalImpulse( direction.mult(scale), point );    
+        }
+        return body;
+    }
+
+    /**
+     * Apply force to raycased rigid body
+     * @param {number} forceScale force scale to be applied to the raycasted body
+     * @return CANNON.Body
+     */
+    applyForceToRayBody( forceScale ) {
+        return this.applyForceImpulseWorldLocal(forceScale, 0);
+    }
+
+    /**
+     * Apply local force to raycased rigid body
+     * @param {number} forceScale force scale to be applied to the raycasted body
+     * @return CANNON.Body
+     */
+    applyLocalForceToRayBody( forceScale ) {
+        return this.applyForceImpulseWorldLocal(forceScale, 1);
+    }
+
+    /**
+     * Apply impulse to raycased rigid body
+     * @param {number} impulseScale impulse scale to be applied to the raycasted body
+     * @return CANNON.Body
+     */
+    applyImpulseToRayBody( impulseScale ) {
+        return this.applyForceImpulseWorldLocal(impulseScale, 2);
+    }
+
+    /**
+     * Apply local impulse to raycased rigid body
+     * @param {number} impulseScale impulse scale to be applied to the raycasted body
+     * @return CANNON.Body
+     */
+    applyLocalImpulseToRayBody( impulseScale ) {
+        return this.applyForceImpulseWorldLocal(impulseScale, 3);
+    }
 
 
     /**********************************************************************************************************/
@@ -893,106 +1024,17 @@ export default class Engine {
      * @return Promise
      */
     loadAssets( model, callback ) {
-        this.core.assetLoader.load( model, callback );
+        return this.core.assetLoader.load( model, callback );
     }
 
     /**
      * Loads models, adds to scene, creates rigid-body and applies reflection-map
      * @param {string} model file name
-     * @param {*} callback callback function
+     * @param {*} callback   callback function
      * @return Promise
      */
     loadModel( model, callback ) {
-
-        return new Promise( (resolve, reject) => {
-
-            //!! 1) Load model
-            this.core.graphics.loadGLTF(model).then( (gltf) => {
-
-                //!! 2) Add all objects to scene
-                this.core.graphics.scene.add( gltf.scene );
-
-                //!! 3) Create rigid-bodies
-                this.core.physics.createBodiesFromScene( gltf.scene );
-
-                //!! 4) Apply reflection map to all meshes
-                if( this.core.graphics.options.useReflection ) {
-                    this.core.graphics.applyReflectionMap( gltf.scene );
-                }
-                
-                //!! 5) Resolve
-                resolve(gltf);
-
-                //!! Callback
-                if( callback ) {
-                   callback(gltf); 
-                }
-            });  
-        });
+        return this.core.loadModel( model, callback );
     }
 
-    /**
-     * Show body-debugger
-     */
-    showDebug() {
-        return this.core.physics.bodyDebug.show();  
-    }
-
-    /**
-     * Hide body-debugger
-     */
-    hideDebug() {
-        return this.core.physics.bodyDebug.hide();  
-    }
-
-    /**
-     * Toggle body-debugger visibility
-     */
-    toggleDebug() {
-        return this.core.physics.bodyDebug.toggle();  
-    }
-
-    /**
-     * Show grids helper
-     */
-    showGrids() {
-        this.core.graphics.addGrids();
-    }
-
-    /**
-     * Hide grids helper
-     */
-    hideGrids() {
-        this.core.graphics.removeGrids();
-    }
-
-    /**
-     * Toggle grids visibility
-     */
-    toggleGrids() {
-        this.core.graphics.toggleGrids();
-    }
-
-
-    /**
-     * Show axes helper
-     */
-    showAxes() {
-        this.core.graphics.addAxes();
-    }
-
-    
-    /**
-     * Hide axes helper
-     */
-    hideAxes() {
-        this.core.graphics.removeAxes();
-    }
-
-    /**
-     * Toggle axes visibility
-     */
-    toggleAxes() {
-        this.core.graphics.toggleAxes();
-    }
 }
