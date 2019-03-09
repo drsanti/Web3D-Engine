@@ -1,5 +1,5 @@
 
-![screenshort](https://github.com/drsanti/INC691-2019/blob/master/apps/public/images/snapshot001.png)
+![screenshort](https://github.com/drsanti/INC691-2019/blob/master/apps/public/images/snapshot002.png)
 
 **Example-01: Getting Started**
 ```javascript
